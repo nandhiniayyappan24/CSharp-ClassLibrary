@@ -1,0 +1,6 @@
+tool: jscpd
+language: csharp
+target_framework: "net6.0"
+project: ../../src/CSharpClassLibrary/CSharpClassLibrary.csproj
+tests: ../../tests/CSharpClassLibrary.Tests/CSharpClassLibrary.Tests.csproj
+tools_project: ../CSharpClassLibrary.Tools/CSharpClassLibrary.Tools.csproj
