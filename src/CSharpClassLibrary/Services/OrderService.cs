@@ -1,0 +1,22 @@
+namespace CSharpClassLibrary.Services
+{
+    public interface IOrderService
+    {
+        string GetWelcomeMessage();
+        decimal CalculateTotal(int quantity, decimal unitPrice, decimal discountPercent);
+        bool IsEligibleForFreeShipping(int orderTotal);
+    }
+
+    public sealed class OrderService : IOrderService
+    {
+        public string GetWelcomeMessage() { return "Class library monolith (net4.5)"; }
+
+        public decimal CalculateTotal(int quantity, decimal unitPrice, decimal discountPercent)
+        {
+            var subtotal = quantity * unitPrice;
+            return subtotal - (subtotal * discountPercent / 100m);
+        }
+
+        public bool IsEligibleForFreeShipping(int orderTotal) { return orderTotal >= 50; }
+    }
+}
