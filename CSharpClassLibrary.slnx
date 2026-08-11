@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/CSharpClassLibrary/CSharpClassLibrary.csproj" />
+  <Project Path="tests/CSharpClassLibrary.Tests/CSharpClassLibrary.Tests.csproj" />
+  <Project Path="tools/CSharpClassLibrary.Tools/CSharpClassLibrary.Tools.csproj" />
+</Solution>
