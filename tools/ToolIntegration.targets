@@ -1,0 +1,28 @@
+<Project>
+  <PropertyGroup>
+    <RepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..'))</RepoRoot>
+    <LibraryProjectPath>$(RepoRoot)\src\CSharpClassLibrary\CSharpClassLibrary.csproj</LibraryProjectPath>
+    <TestProjectPath>$(RepoRoot)\tests\CSharpClassLibrary.Tests\CSharpClassLibrary.Tests.csproj</TestProjectPath>
+  </PropertyGroup>
+  <Target Name="RunToolIntegration" AfterTargets="Build" Condition="'$(MSBuildProjectName)' == 'CSharpClassLibrary.Tools'">
+    <Message Importance="high" Text="=== Tool integration for net7.0 ===" />
+    <Message Importance="high" Text="[AltCover] Package: tests/CSharpClassLibrary.Tests.csproj -> altcover" />
+    <Message Importance="high" Text="[Coverlet] Package: tests/CSharpClassLibrary.Tests.csproj -> coverlet.collector" />
+    <Message Importance="high" Text="[NuGet-Audit] Property: NuGetAudit=true in Directory.Build.props" />
+    <Message Importance="high" Text="[OpenTelemetry] Code: src/CSharpClassLibrary/Extensions/OpenTelemetryExtensions.cs" />
+    <Message Importance="high" Text="[Roslyn] Config: .editorconfig + EnableNETAnalyzers" />
+    <Message Importance="high" Text="[Semgrep] Target: src/CSharpClassLibrary/Analysis/SastFixture.cs via tools/semgrep/" />
+    <Message Importance="high" Text="[Stryker.NET] Config: tools/Stryker.NET/stryker-config.json -> Services/**/*.cs" />
+    <Message Importance="high" Text="[jscpd] Config: tools/jscpd/.jscpd.json -> src/CSharpClassLibrary/Services" />
+    <Message Importance="high" Text="[lizard] Target: src/CSharpClassLibrary/Analysis/ComplexitySample.cs via tools/lizard/" />
+    <Message Importance="high" Text="[pydriller] Script: tools/pydriller/run_pydriller.py -> repo root" />
+    <Message Importance="high" Text="[roslyn-sast] Config: tools/roslyn-sast/.globalconfig -> GlobalAnalyzerConfigFiles" />
+  </Target>
+
+  <Target Name="RunCoverlet" DependsOnTargets="Build">
+    <Exec Command="dotnet test &quot;$(TestProjectPath)&quot; --no-build --collect:&quot;XPlat Code Coverage&quot;" WorkingDirectory="$(RepoRoot)" />
+  </Target>
+  <Target Name="RunAltCover" DependsOnTargets="Build">
+    <Exec Command="dotnet test &quot;$(TestProjectPath)&quot; /p:AltCover=true /p:AltCoverAssemblyExcludeFilter=&quot;xunit&quot;" WorkingDirectory="$(RepoRoot)" />
+  </Target>
+</Project>
